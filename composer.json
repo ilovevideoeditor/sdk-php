@@ -1,8 +1,13 @@
 {
   "name": "ilovevideoeditor/sdk",
-  "description": "Official PHP SDK for iLoveVideoEditor — cloud video rendering API",
+  "description": "Official PHP SDK for the iLoveVideoEditor cloud video rendering API — render MP4/WebM videos programmatically from JSON scene descriptions and templates",
   "type": "library",
-  "keywords": ["video", "rendering", "api", "ilovevideoeditor", "sdk"],
+  "keywords": ["video", "video-rendering", "video-api", "video-generation", "programmatic-video", "video-editing", "video-automation", "cloud-rendering", "render-api", "mp4", "sdk", "api-client", "ilovevideoeditor"],
+  "support": {
+    "issues": "https://github.com/ilovevideoeditor/sdk-php/issues",
+    "source": "https://github.com/ilovevideoeditor/sdk-php",
+    "docs": "https://ilovevideoeditor.com/docs/sdks"
+  },
   "homepage": "https://ilovevideoeditor.com",
   "license": "MIT",
   "authors": [
