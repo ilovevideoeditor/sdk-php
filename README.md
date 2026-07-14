@@ -5,6 +5,7 @@ Official PHP SDK for iLoveVideoEditor — render videos programmatically with a 
 iLoveVideoEditor is a cloud video rendering API: submit a JSON scene description or template, queue a render, and download the resulting MP4/WebM. This package is the official PHP client, combining a friendly high-level wrapper (queue + poll + download URL in one call) with a fully generated API client covering every endpoint.
 
 [![Packagist Version](https://img.shields.io/packagist/v/ilovevideoeditor/sdk.svg)](https://packagist.org/packages/ilovevideoeditor/sdk) [![PHP Version](https://img.shields.io/packagist/php-v/ilovevideoeditor/sdk.svg)](https://packagist.org/packages/ilovevideoeditor/sdk) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Docs](https://img.shields.io/badge/docs-ilovevideoeditor.com-blue)](https://ilovevideoeditor.com/docs/sdks)
+- API reference: [OpenAPI spec](https://ilovevideoeditor.com/docs/api/openapi.yaml) · [Postman collection](https://ilovevideoeditor.com/docs/api/postman-collection.json)
 
 ## Features
 
