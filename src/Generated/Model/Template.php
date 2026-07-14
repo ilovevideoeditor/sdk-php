@@ -64,7 +64,6 @@ class Template implements ModelInterface, ArrayAccess, \JsonSerializable
         'platform' => 'string',
         'accent_color' => 'string',
         'icon' => 'string',
-        'mode' => 'string',
         'tool_id' => 'string',
         'variables_schema' => 'array<string,mixed>[]'
     ];
@@ -83,7 +82,6 @@ class Template implements ModelInterface, ArrayAccess, \JsonSerializable
         'platform' => null,
         'accent_color' => null,
         'icon' => null,
-        'mode' => null,
         'tool_id' => null,
         'variables_schema' => null
     ];
@@ -100,7 +98,6 @@ class Template implements ModelInterface, ArrayAccess, \JsonSerializable
         'platform' => false,
         'accent_color' => false,
         'icon' => false,
-        'mode' => false,
         'tool_id' => true,
         'variables_schema' => true
     ];
@@ -197,7 +194,6 @@ class Template implements ModelInterface, ArrayAccess, \JsonSerializable
         'platform' => 'platform',
         'accent_color' => 'accentColor',
         'icon' => 'icon',
-        'mode' => 'mode',
         'tool_id' => 'toolId',
         'variables_schema' => 'variablesSchema'
     ];
@@ -214,7 +210,6 @@ class Template implements ModelInterface, ArrayAccess, \JsonSerializable
         'platform' => 'setPlatform',
         'accent_color' => 'setAccentColor',
         'icon' => 'setIcon',
-        'mode' => 'setMode',
         'tool_id' => 'setToolId',
         'variables_schema' => 'setVariablesSchema'
     ];
@@ -231,7 +226,6 @@ class Template implements ModelInterface, ArrayAccess, \JsonSerializable
         'platform' => 'getPlatform',
         'accent_color' => 'getAccentColor',
         'icon' => 'getIcon',
-        'mode' => 'getMode',
         'tool_id' => 'getToolId',
         'variables_schema' => 'getVariablesSchema'
     ];
@@ -281,8 +275,6 @@ class Template implements ModelInterface, ArrayAccess, \JsonSerializable
     public const PLATFORM_TIKTOK = 'tiktok';
     public const PLATFORM_INSTAGRAM = 'instagram';
     public const PLATFORM_GENERAL = 'general';
-    public const MODE_PRESET = 'preset';
-    public const MODE_PROJECT = 'project';
 
     /**
      * Gets allowable values of the enum
@@ -296,19 +288,6 @@ class Template implements ModelInterface, ArrayAccess, \JsonSerializable
             self::PLATFORM_TIKTOK,
             self::PLATFORM_INSTAGRAM,
             self::PLATFORM_GENERAL,
-        ];
-    }
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getModeAllowableValues()
-    {
-        return [
-            self::MODE_PRESET,
-            self::MODE_PROJECT,
         ];
     }
 
@@ -333,7 +312,6 @@ class Template implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('platform', $data ?? [], null);
         $this->setIfExists('accent_color', $data ?? [], null);
         $this->setIfExists('icon', $data ?? [], null);
-        $this->setIfExists('mode', $data ?? [], null);
         $this->setIfExists('tool_id', $data ?? [], null);
         $this->setIfExists('variables_schema', $data ?? [], null);
     }
@@ -389,18 +367,6 @@ class Template implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['icon'] === null) {
             $invalidProperties[] = "'icon' can't be null";
         }
-        if ($this->container['mode'] === null) {
-            $invalidProperties[] = "'mode' can't be null";
-        }
-        $allowedValues = $this->getModeAllowableValues();
-        if (!is_null($this->container['mode']) && !in_array($this->container['mode'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'mode', must be one of '%s'",
-                $this->container['mode'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         return $invalidProperties;
     }
 
@@ -584,43 +550,6 @@ class Template implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable icon cannot be null');
         }
         $this->container['icon'] = $icon;
-
-        return $this;
-    }
-
-    /**
-     * Gets mode
-     *
-     * @return string
-     */
-    public function getMode()
-    {
-        return $this->container['mode'];
-    }
-
-    /**
-     * Sets mode
-     *
-     * @param string $mode mode
-     *
-     * @return self
-     */
-    public function setMode($mode)
-    {
-        if (is_null($mode)) {
-            throw new \InvalidArgumentException('non-nullable mode cannot be null');
-        }
-        $allowedValues = $this->getModeAllowableValues();
-        if (!in_array($mode, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'mode', must be one of '%s'",
-                    $mode,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['mode'] = $mode;
 
         return $this;
     }

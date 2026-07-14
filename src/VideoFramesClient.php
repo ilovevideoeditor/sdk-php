@@ -42,6 +42,23 @@ class iLoveVideoEditorClient
     }
 
     /**
+     * Normalize the API progress payload ({done, total, percent}) to a percent number.
+     */
+    private static function progressPercent(mixed $progress): float
+    {
+        if ($progress === null) {
+            return 0.0;
+        }
+        if (is_numeric($progress)) {
+            return (float) $progress;
+        }
+        if (is_object($progress) && method_exists($progress, 'getPercent')) {
+            return (float) ($progress->getPercent() ?? 0.0);
+        }
+        return 0.0;
+    }
+
+    /**
      * Submit a VideoJSON payload and block until the render finishes.
      *
      * @param array<string, mixed> $videoJson
@@ -60,9 +77,10 @@ class iLoveVideoEditorClient
         $deadline = time() + $maxWait;
         while (time() < $deadline) {
             $status = $this->renderApi->getRenderStatus($jobId);
+            $progress = self::progressPercent($status->getProgress());
 
             if ($onProgress !== null) {
-                $onProgress($status->getStatus(), $status->getProgress());
+                $onProgress($status->getStatus(), $progress);
             }
 
             if ($status->getStatus() === 'completed') {
@@ -70,7 +88,7 @@ class iLoveVideoEditorClient
                 return new RenderResult(
                     jobId: $jobId,
                     status: $status->getStatus(),
-                    progress: $status->getProgress(),
+                    progress: $progress,
                     url: $status->getUrl(),
                     downloadUrl: $refresh->getDownloadUrl(),
                     error: $status->getError(),
@@ -83,7 +101,7 @@ class iLoveVideoEditorClient
                 return new RenderResult(
                     jobId: $jobId,
                     status: $status->getStatus(),
-                    progress: $status->getProgress(),
+                    progress: $progress,
                     error: $status->getError(),
                     createdAt: $status->getCreatedAt(),
                     completedAt: $status->getCompletedAt(),
@@ -102,7 +120,7 @@ class iLoveVideoEditorClient
         return new RenderResult(
             jobId: $status->getJobId(),
             status: $status->getStatus(),
-            progress: $status->getProgress(),
+            progress: self::progressPercent($status->getProgress()),
             url: $status->getUrl(),
             error: $status->getError(),
             createdAt: $status->getCreatedAt(),
