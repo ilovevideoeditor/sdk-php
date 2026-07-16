@@ -60,7 +60,8 @@ class CreateCheckoutSessionRequest implements ModelInterface, ArrayAccess, \Json
         'product_id' => 'string',
         'tier_id' => 'string',
         'mode' => 'string',
-        'credits' => 'int'
+        'credits' => 'int',
+        'amount_eur' => 'float'
     ];
 
     /**
@@ -74,7 +75,8 @@ class CreateCheckoutSessionRequest implements ModelInterface, ArrayAccess, \Json
         'product_id' => null,
         'tier_id' => null,
         'mode' => null,
-        'credits' => null
+        'credits' => null,
+        'amount_eur' => null
     ];
 
     /**
@@ -86,7 +88,8 @@ class CreateCheckoutSessionRequest implements ModelInterface, ArrayAccess, \Json
         'product_id' => false,
         'tier_id' => false,
         'mode' => false,
-        'credits' => false
+        'credits' => false,
+        'amount_eur' => false
     ];
 
     /**
@@ -178,7 +181,8 @@ class CreateCheckoutSessionRequest implements ModelInterface, ArrayAccess, \Json
         'product_id' => 'productId',
         'tier_id' => 'tierId',
         'mode' => 'mode',
-        'credits' => 'credits'
+        'credits' => 'credits',
+        'amount_eur' => 'amountEur'
     ];
 
     /**
@@ -190,7 +194,8 @@ class CreateCheckoutSessionRequest implements ModelInterface, ArrayAccess, \Json
         'product_id' => 'setProductId',
         'tier_id' => 'setTierId',
         'mode' => 'setMode',
-        'credits' => 'setCredits'
+        'credits' => 'setCredits',
+        'amount_eur' => 'setAmountEur'
     ];
 
     /**
@@ -202,7 +207,8 @@ class CreateCheckoutSessionRequest implements ModelInterface, ArrayAccess, \Json
         'product_id' => 'getProductId',
         'tier_id' => 'getTierId',
         'mode' => 'getMode',
-        'credits' => 'getCredits'
+        'credits' => 'getCredits',
+        'amount_eur' => 'getAmountEur'
     ];
 
     /**
@@ -300,6 +306,7 @@ class CreateCheckoutSessionRequest implements ModelInterface, ArrayAccess, \Json
         $this->setIfExists('tier_id', $data ?? [], null);
         $this->setIfExists('mode', $data ?? [], null);
         $this->setIfExists('credits', $data ?? [], null);
+        $this->setIfExists('amount_eur', $data ?? [], null);
     }
 
     /**
@@ -486,6 +493,33 @@ class CreateCheckoutSessionRequest implements ModelInterface, ArrayAccess, \Json
             throw new \InvalidArgumentException('non-nullable credits cannot be null');
         }
         $this->container['credits'] = $credits;
+
+        return $this;
+    }
+
+    /**
+     * Gets amount_eur
+     *
+     * @return float|null
+     */
+    public function getAmountEur()
+    {
+        return $this->container['amount_eur'];
+    }
+
+    /**
+     * Sets amount_eur
+     *
+     * @param float|null $amount_eur Custom credit top-up amount in EUR (`mode=payment` only). Between 10 and 2500, at most 2 decimal places. When set, the pay-what-you-want credits product is used and any `productId` is ignored.
+     *
+     * @return self
+     */
+    public function setAmountEur($amount_eur)
+    {
+        if (is_null($amount_eur)) {
+            throw new \InvalidArgumentException('non-nullable amount_eur cannot be null');
+        }
+        $this->container['amount_eur'] = $amount_eur;
 
         return $this;
     }

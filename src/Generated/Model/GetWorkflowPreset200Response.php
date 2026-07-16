@@ -1,6 +1,6 @@
 <?php
 /**
- * WorkflowStep
+ * GetWorkflowPreset200Response
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \iLoveVideoEditorSDK\ObjectSerializer;
 
 /**
- * WorkflowStep Class Doc Comment
+ * GetWorkflowPreset200Response Class Doc Comment
  *
  * @category Class
  * @package  iLoveVideoEditorSDK
@@ -40,7 +40,7 @@ use \iLoveVideoEditorSDK\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
+class GetWorkflowPreset200Response implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      *
      * @var string
      */
-    protected static $openAPIModelName = 'WorkflowStep';
+    protected static $openAPIModelName = 'getWorkflowPreset_200_response';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,10 +57,7 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $openAPITypes = [
-        'type' => 'string',
-        'name' => 'string',
-        'max_retries' => 'int',
-        'config' => 'array<string,mixed>'
+        'preset' => '\iLoveVideoEditorSDK\Model\WorkflowPreset'
     ];
 
     /**
@@ -71,10 +68,7 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'type' => null,
-        'name' => null,
-        'max_retries' => null,
-        'config' => null
+        'preset' => null
     ];
 
     /**
@@ -83,10 +77,7 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'type' => false,
-        'name' => false,
-        'max_retries' => false,
-        'config' => false
+        'preset' => false
     ];
 
     /**
@@ -175,10 +166,7 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'type' => 'type',
-        'name' => 'name',
-        'max_retries' => 'maxRetries',
-        'config' => 'config'
+        'preset' => 'preset'
     ];
 
     /**
@@ -187,10 +175,7 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'type' => 'setType',
-        'name' => 'setName',
-        'max_retries' => 'setMaxRetries',
-        'config' => 'setConfig'
+        'preset' => 'setPreset'
     ];
 
     /**
@@ -199,10 +184,7 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'type' => 'getType',
-        'name' => 'getName',
-        'max_retries' => 'getMaxRetries',
-        'config' => 'getConfig'
+        'preset' => 'getPreset'
     ];
 
     /**
@@ -246,33 +228,6 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-    public const TYPE_UPLOAD_ASSET = 'upload_asset';
-    public const TYPE_CRAWL_URL = 'crawl_url';
-    public const TYPE_DISCOVER_VARIABLES = 'discover_variables';
-    public const TYPE_RENDER_TEMPLATE = 'render_template';
-    public const TYPE_RENDER_VIDEOJSON = 'render_videojson';
-    public const TYPE_APPLY_TOOL = 'apply_tool';
-    public const TYPE_REVIEW = 'review';
-    public const TYPE_SEND_TO_DESTINATION = 'send_to_destination';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getTypeAllowableValues()
-    {
-        return [
-            self::TYPE_UPLOAD_ASSET,
-            self::TYPE_CRAWL_URL,
-            self::TYPE_DISCOVER_VARIABLES,
-            self::TYPE_RENDER_TEMPLATE,
-            self::TYPE_RENDER_VIDEOJSON,
-            self::TYPE_APPLY_TOOL,
-            self::TYPE_REVIEW,
-            self::TYPE_SEND_TO_DESTINATION,
-        ];
-    }
 
     /**
      * Associative array for storing property values
@@ -289,10 +244,7 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('type', $data ?? [], null);
-        $this->setIfExists('name', $data ?? [], null);
-        $this->setIfExists('max_retries', $data ?? [], null);
-        $this->setIfExists('config', $data ?? [], null);
+        $this->setIfExists('preset', $data ?? [], null);
     }
 
     /**
@@ -322,28 +274,8 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['type'] === null) {
-            $invalidProperties[] = "'type' can't be null";
-        }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'type', must be one of '%s'",
-                $this->container['type'],
-                implode("', '", $allowedValues)
-            );
-        }
-
-        if (!is_null($this->container['max_retries']) && ($this->container['max_retries'] > 10)) {
-            $invalidProperties[] = "invalid value for 'max_retries', must be smaller than or equal to 10.";
-        }
-
-        if (!is_null($this->container['max_retries']) && ($this->container['max_retries'] < 0)) {
-            $invalidProperties[] = "invalid value for 'max_retries', must be bigger than or equal to 0.";
-        }
-
-        if ($this->container['config'] === null) {
-            $invalidProperties[] = "'config' can't be null";
+        if ($this->container['preset'] === null) {
+            $invalidProperties[] = "'preset' can't be null";
         }
         return $invalidProperties;
     }
@@ -361,127 +293,28 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets type
+     * Gets preset
      *
-     * @return string
+     * @return \iLoveVideoEditorSDK\Model\WorkflowPreset
      */
-    public function getType()
+    public function getPreset()
     {
-        return $this->container['type'];
+        return $this->container['preset'];
     }
 
     /**
-     * Sets type
+     * Sets preset
      *
-     * @param string $type type
+     * @param \iLoveVideoEditorSDK\Model\WorkflowPreset $preset preset
      *
      * @return self
      */
-    public function setType($type)
+    public function setPreset($preset)
     {
-        if (is_null($type)) {
-            throw new \InvalidArgumentException('non-nullable type cannot be null');
+        if (is_null($preset)) {
+            throw new \InvalidArgumentException('non-nullable preset cannot be null');
         }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!in_array($type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'type', must be one of '%s'",
-                    $type,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['type'] = $type;
-
-        return $this;
-    }
-
-    /**
-     * Gets name
-     *
-     * @return string|null
-     */
-    public function getName()
-    {
-        return $this->container['name'];
-    }
-
-    /**
-     * Sets name
-     *
-     * @param string|null $name name
-     *
-     * @return self
-     */
-    public function setName($name)
-    {
-        if (is_null($name)) {
-            throw new \InvalidArgumentException('non-nullable name cannot be null');
-        }
-        $this->container['name'] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Gets max_retries
-     *
-     * @return int|null
-     */
-    public function getMaxRetries()
-    {
-        return $this->container['max_retries'];
-    }
-
-    /**
-     * Sets max_retries
-     *
-     * @param int|null $max_retries max_retries
-     *
-     * @return self
-     */
-    public function setMaxRetries($max_retries)
-    {
-        if (is_null($max_retries)) {
-            throw new \InvalidArgumentException('non-nullable max_retries cannot be null');
-        }
-
-        if (($max_retries > 10)) {
-            throw new \InvalidArgumentException('invalid value for $max_retries when calling WorkflowStep., must be smaller than or equal to 10.');
-        }
-        if (($max_retries < 0)) {
-            throw new \InvalidArgumentException('invalid value for $max_retries when calling WorkflowStep., must be bigger than or equal to 0.');
-        }
-
-        $this->container['max_retries'] = $max_retries;
-
-        return $this;
-    }
-
-    /**
-     * Gets config
-     *
-     * @return array<string,mixed>
-     */
-    public function getConfig()
-    {
-        return $this->container['config'];
-    }
-
-    /**
-     * Sets config
-     *
-     * @param array<string,mixed> $config config
-     *
-     * @return self
-     */
-    public function setConfig($config)
-    {
-        if (is_null($config)) {
-            throw new \InvalidArgumentException('non-nullable config cannot be null');
-        }
-        $this->container['config'] = $config;
+        $this->container['preset'] = $preset;
 
         return $this;
     }

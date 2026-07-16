@@ -64,6 +64,7 @@ class Workflow implements ModelInterface, ArrayAccess, \JsonSerializable
         'description' => 'string',
         'definition' => '\iLoveVideoEditorSDK\Model\WorkflowDefinition',
         'is_active' => 'bool',
+        'source_preset_id' => 'string',
         'created_at' => '\DateTime',
         'updated_at' => '\DateTime'
     ];
@@ -83,6 +84,7 @@ class Workflow implements ModelInterface, ArrayAccess, \JsonSerializable
         'description' => null,
         'definition' => null,
         'is_active' => null,
+        'source_preset_id' => null,
         'created_at' => 'date-time',
         'updated_at' => 'date-time'
     ];
@@ -100,6 +102,7 @@ class Workflow implements ModelInterface, ArrayAccess, \JsonSerializable
         'description' => true,
         'definition' => false,
         'is_active' => false,
+        'source_preset_id' => true,
         'created_at' => false,
         'updated_at' => false
     ];
@@ -197,6 +200,7 @@ class Workflow implements ModelInterface, ArrayAccess, \JsonSerializable
         'description' => 'description',
         'definition' => 'definition',
         'is_active' => 'isActive',
+        'source_preset_id' => 'sourcePresetId',
         'created_at' => 'createdAt',
         'updated_at' => 'updatedAt'
     ];
@@ -214,6 +218,7 @@ class Workflow implements ModelInterface, ArrayAccess, \JsonSerializable
         'description' => 'setDescription',
         'definition' => 'setDefinition',
         'is_active' => 'setIsActive',
+        'source_preset_id' => 'setSourcePresetId',
         'created_at' => 'setCreatedAt',
         'updated_at' => 'setUpdatedAt'
     ];
@@ -231,6 +236,7 @@ class Workflow implements ModelInterface, ArrayAccess, \JsonSerializable
         'description' => 'getDescription',
         'definition' => 'getDefinition',
         'is_active' => 'getIsActive',
+        'source_preset_id' => 'getSourcePresetId',
         'created_at' => 'getCreatedAt',
         'updated_at' => 'getUpdatedAt'
     ];
@@ -299,6 +305,7 @@ class Workflow implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('description', $data ?? [], null);
         $this->setIfExists('definition', $data ?? [], null);
         $this->setIfExists('is_active', $data ?? [], null);
+        $this->setIfExists('source_preset_id', $data ?? [], null);
         $this->setIfExists('created_at', $data ?? [], null);
         $this->setIfExists('updated_at', $data ?? [], null);
     }
@@ -561,6 +568,40 @@ class Workflow implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable is_active cannot be null');
         }
         $this->container['is_active'] = $is_active;
+
+        return $this;
+    }
+
+    /**
+     * Gets source_preset_id
+     *
+     * @return string|null
+     */
+    public function getSourcePresetId()
+    {
+        return $this->container['source_preset_id'];
+    }
+
+    /**
+     * Sets source_preset_id
+     *
+     * @param string|null $source_preset_id Id of the system preset this workflow was imported from (null when built from scratch).
+     *
+     * @return self
+     */
+    public function setSourcePresetId($source_preset_id)
+    {
+        if (is_null($source_preset_id)) {
+            array_push($this->openAPINullablesSetToNull, 'source_preset_id');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('source_preset_id', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['source_preset_id'] = $source_preset_id;
 
         return $this;
     }

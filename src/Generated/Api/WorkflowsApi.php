@@ -86,7 +86,13 @@ class WorkflowsApi
         'getWorkflow' => [
             'application/json',
         ],
+        'getWorkflowPreset' => [
+            'application/json',
+        ],
         'getWorkflowRun' => [
+            'application/json',
+        ],
+        'listWorkflowPresets' => [
             'application/json',
         ],
         'listWorkflowRuns' => [
@@ -102,6 +108,9 @@ class WorkflowsApi
             'application/json',
         ],
         'retryWorkflowStep' => [
+            'application/json',
+        ],
+        'reviewWorkflowStep' => [
             'application/json',
         ],
         'runWorkflow' => [
@@ -1395,6 +1404,297 @@ class WorkflowsApi
     }
 
     /**
+     * Operation getWorkflowPreset
+     *
+     * Get a workflow preset
+     *
+     * @param  string $id id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getWorkflowPreset'] to see the possible values for this operation
+     *
+     * @throws \iLoveVideoEditorSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \iLoveVideoEditorSDK\Model\GetWorkflowPreset200Response|\iLoveVideoEditorSDK\Model\Error
+     */
+    public function getWorkflowPreset($id, string $contentType = self::contentTypes['getWorkflowPreset'][0])
+    {
+        list($response) = $this->getWorkflowPresetWithHttpInfo($id, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getWorkflowPresetWithHttpInfo
+     *
+     * Get a workflow preset
+     *
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getWorkflowPreset'] to see the possible values for this operation
+     *
+     * @throws \iLoveVideoEditorSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \iLoveVideoEditorSDK\Model\GetWorkflowPreset200Response|\iLoveVideoEditorSDK\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getWorkflowPresetWithHttpInfo($id, string $contentType = self::contentTypes['getWorkflowPreset'][0])
+    {
+        $request = $this->getWorkflowPresetRequest($id, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\iLoveVideoEditorSDK\Model\GetWorkflowPreset200Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\iLoveVideoEditorSDK\Model\Error',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\iLoveVideoEditorSDK\Model\GetWorkflowPreset200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\iLoveVideoEditorSDK\Model\GetWorkflowPreset200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\iLoveVideoEditorSDK\Model\Error',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getWorkflowPresetAsync
+     *
+     * Get a workflow preset
+     *
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getWorkflowPreset'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getWorkflowPresetAsync($id, string $contentType = self::contentTypes['getWorkflowPreset'][0])
+    {
+        return $this->getWorkflowPresetAsyncWithHttpInfo($id, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getWorkflowPresetAsyncWithHttpInfo
+     *
+     * Get a workflow preset
+     *
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getWorkflowPreset'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getWorkflowPresetAsyncWithHttpInfo($id, string $contentType = self::contentTypes['getWorkflowPreset'][0])
+    {
+        $returnType = '\iLoveVideoEditorSDK\Model\GetWorkflowPreset200Response';
+        $request = $this->getWorkflowPresetRequest($id, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getWorkflowPreset'
+     *
+     * @param  string $id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getWorkflowPreset'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getWorkflowPresetRequest($id, string $contentType = self::contentTypes['getWorkflowPreset'][0])
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling getWorkflowPreset'
+            );
+        }
+
+
+        $resourcePath = '/v1/workflows/presets/{id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{id}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('x-api-key');
+        if ($apiKey !== null) {
+            $headers['x-api-key'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation getWorkflowRun
      *
      * Get a workflow run
@@ -1635,6 +1935,277 @@ class WorkflowsApi
                 $resourcePath
             );
         }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('x-api-key');
+        if ($apiKey !== null) {
+            $headers['x-api-key'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listWorkflowPresets
+     *
+     * List system workflow presets
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWorkflowPresets'] to see the possible values for this operation
+     *
+     * @throws \iLoveVideoEditorSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \iLoveVideoEditorSDK\Model\ListWorkflowPresets200Response|\iLoveVideoEditorSDK\Model\Error
+     */
+    public function listWorkflowPresets(string $contentType = self::contentTypes['listWorkflowPresets'][0])
+    {
+        list($response) = $this->listWorkflowPresetsWithHttpInfo($contentType);
+        return $response;
+    }
+
+    /**
+     * Operation listWorkflowPresetsWithHttpInfo
+     *
+     * List system workflow presets
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWorkflowPresets'] to see the possible values for this operation
+     *
+     * @throws \iLoveVideoEditorSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \iLoveVideoEditorSDK\Model\ListWorkflowPresets200Response|\iLoveVideoEditorSDK\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listWorkflowPresetsWithHttpInfo(string $contentType = self::contentTypes['listWorkflowPresets'][0])
+    {
+        $request = $this->listWorkflowPresetsRequest($contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\iLoveVideoEditorSDK\Model\ListWorkflowPresets200Response',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\iLoveVideoEditorSDK\Model\Error',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\iLoveVideoEditorSDK\Model\ListWorkflowPresets200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\iLoveVideoEditorSDK\Model\ListWorkflowPresets200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\iLoveVideoEditorSDK\Model\Error',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listWorkflowPresetsAsync
+     *
+     * List system workflow presets
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWorkflowPresets'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listWorkflowPresetsAsync(string $contentType = self::contentTypes['listWorkflowPresets'][0])
+    {
+        return $this->listWorkflowPresetsAsyncWithHttpInfo($contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listWorkflowPresetsAsyncWithHttpInfo
+     *
+     * List system workflow presets
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWorkflowPresets'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listWorkflowPresetsAsyncWithHttpInfo(string $contentType = self::contentTypes['listWorkflowPresets'][0])
+    {
+        $returnType = '\iLoveVideoEditorSDK\Model\ListWorkflowPresets200Response';
+        $request = $this->listWorkflowPresetsRequest($contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'listWorkflowPresets'
+     *
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listWorkflowPresets'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function listWorkflowPresetsRequest(string $contentType = self::contentTypes['listWorkflowPresets'][0])
+    {
+
+
+        $resourcePath = '/v1/workflows/presets';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
 
 
         $headers = $this->headerSelector->selectHeaders(
@@ -3182,6 +3753,378 @@ class WorkflowsApi
 
         // for model (json/xml)
         if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('x-api-key');
+        if ($apiKey !== null) {
+            $headers['x-api-key'] = $apiKey;
+        }
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation reviewWorkflowStep
+     *
+     * Approve or reject a paused review step
+     *
+     * @param  string $run_id run_id (required)
+     * @param  string $step_id step_id (required)
+     * @param  \iLoveVideoEditorSDK\Model\ReviewWorkflowStepRequest $review_workflow_step_request review_workflow_step_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reviewWorkflowStep'] to see the possible values for this operation
+     *
+     * @throws \iLoveVideoEditorSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \iLoveVideoEditorSDK\Model\UploadAsset200Response|\iLoveVideoEditorSDK\Model\Error|\iLoveVideoEditorSDK\Model\Error|\iLoveVideoEditorSDK\Model\Error|\iLoveVideoEditorSDK\Model\Error
+     */
+    public function reviewWorkflowStep($run_id, $step_id, $review_workflow_step_request, string $contentType = self::contentTypes['reviewWorkflowStep'][0])
+    {
+        list($response) = $this->reviewWorkflowStepWithHttpInfo($run_id, $step_id, $review_workflow_step_request, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation reviewWorkflowStepWithHttpInfo
+     *
+     * Approve or reject a paused review step
+     *
+     * @param  string $run_id (required)
+     * @param  string $step_id (required)
+     * @param  \iLoveVideoEditorSDK\Model\ReviewWorkflowStepRequest $review_workflow_step_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reviewWorkflowStep'] to see the possible values for this operation
+     *
+     * @throws \iLoveVideoEditorSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \iLoveVideoEditorSDK\Model\UploadAsset200Response|\iLoveVideoEditorSDK\Model\Error|\iLoveVideoEditorSDK\Model\Error|\iLoveVideoEditorSDK\Model\Error|\iLoveVideoEditorSDK\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function reviewWorkflowStepWithHttpInfo($run_id, $step_id, $review_workflow_step_request, string $contentType = self::contentTypes['reviewWorkflowStep'][0])
+    {
+        $request = $this->reviewWorkflowStepRequest($run_id, $step_id, $review_workflow_step_request, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\iLoveVideoEditorSDK\Model\UploadAsset200Response',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\iLoveVideoEditorSDK\Model\Error',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\iLoveVideoEditorSDK\Model\Error',
+                        $request,
+                        $response,
+                    );
+                case 404:
+                    return $this->handleResponseWithDataType(
+                        '\iLoveVideoEditorSDK\Model\Error',
+                        $request,
+                        $response,
+                    );
+                case 409:
+                    return $this->handleResponseWithDataType(
+                        '\iLoveVideoEditorSDK\Model\Error',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\iLoveVideoEditorSDK\Model\UploadAsset200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\iLoveVideoEditorSDK\Model\UploadAsset200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\iLoveVideoEditorSDK\Model\Error',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\iLoveVideoEditorSDK\Model\Error',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\iLoveVideoEditorSDK\Model\Error',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\iLoveVideoEditorSDK\Model\Error',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation reviewWorkflowStepAsync
+     *
+     * Approve or reject a paused review step
+     *
+     * @param  string $run_id (required)
+     * @param  string $step_id (required)
+     * @param  \iLoveVideoEditorSDK\Model\ReviewWorkflowStepRequest $review_workflow_step_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reviewWorkflowStep'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function reviewWorkflowStepAsync($run_id, $step_id, $review_workflow_step_request, string $contentType = self::contentTypes['reviewWorkflowStep'][0])
+    {
+        return $this->reviewWorkflowStepAsyncWithHttpInfo($run_id, $step_id, $review_workflow_step_request, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation reviewWorkflowStepAsyncWithHttpInfo
+     *
+     * Approve or reject a paused review step
+     *
+     * @param  string $run_id (required)
+     * @param  string $step_id (required)
+     * @param  \iLoveVideoEditorSDK\Model\ReviewWorkflowStepRequest $review_workflow_step_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reviewWorkflowStep'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function reviewWorkflowStepAsyncWithHttpInfo($run_id, $step_id, $review_workflow_step_request, string $contentType = self::contentTypes['reviewWorkflowStep'][0])
+    {
+        $returnType = '\iLoveVideoEditorSDK\Model\UploadAsset200Response';
+        $request = $this->reviewWorkflowStepRequest($run_id, $step_id, $review_workflow_step_request, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'reviewWorkflowStep'
+     *
+     * @param  string $run_id (required)
+     * @param  string $step_id (required)
+     * @param  \iLoveVideoEditorSDK\Model\ReviewWorkflowStepRequest $review_workflow_step_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reviewWorkflowStep'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function reviewWorkflowStepRequest($run_id, $step_id, $review_workflow_step_request, string $contentType = self::contentTypes['reviewWorkflowStep'][0])
+    {
+
+        // verify the required parameter 'run_id' is set
+        if ($run_id === null || (is_array($run_id) && count($run_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $run_id when calling reviewWorkflowStep'
+            );
+        }
+
+        // verify the required parameter 'step_id' is set
+        if ($step_id === null || (is_array($step_id) && count($step_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $step_id when calling reviewWorkflowStep'
+            );
+        }
+
+        // verify the required parameter 'review_workflow_step_request' is set
+        if ($review_workflow_step_request === null || (is_array($review_workflow_step_request) && count($review_workflow_step_request) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $review_workflow_step_request when calling reviewWorkflowStep'
+            );
+        }
+
+
+        $resourcePath = '/v1/workflows/runs/{runId}/steps/{stepId}/review';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($run_id !== null) {
+            $resourcePath = str_replace(
+                '{runId}',
+                ObjectSerializer::toPathValue($run_id),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($step_id !== null) {
+            $resourcePath = str_replace(
+                '{stepId}',
+                ObjectSerializer::toPathValue($step_id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($review_workflow_step_request)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($review_workflow_step_request));
+            } else {
+                $httpBody = $review_workflow_step_request;
+            }
+        } elseif (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {

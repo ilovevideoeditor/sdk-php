@@ -60,7 +60,8 @@ class CreateWorkflowRequest implements ModelInterface, ArrayAccess, \JsonSeriali
         'name' => 'string',
         'description' => 'string',
         'definition' => '\iLoveVideoEditorSDK\Model\WorkflowDefinition',
-        'is_active' => 'bool'
+        'is_active' => 'bool',
+        'source_preset_id' => 'string'
     ];
 
     /**
@@ -74,7 +75,8 @@ class CreateWorkflowRequest implements ModelInterface, ArrayAccess, \JsonSeriali
         'name' => null,
         'description' => null,
         'definition' => null,
-        'is_active' => null
+        'is_active' => null,
+        'source_preset_id' => null
     ];
 
     /**
@@ -86,7 +88,8 @@ class CreateWorkflowRequest implements ModelInterface, ArrayAccess, \JsonSeriali
         'name' => false,
         'description' => false,
         'definition' => false,
-        'is_active' => false
+        'is_active' => false,
+        'source_preset_id' => false
     ];
 
     /**
@@ -178,7 +181,8 @@ class CreateWorkflowRequest implements ModelInterface, ArrayAccess, \JsonSeriali
         'name' => 'name',
         'description' => 'description',
         'definition' => 'definition',
-        'is_active' => 'isActive'
+        'is_active' => 'isActive',
+        'source_preset_id' => 'sourcePresetId'
     ];
 
     /**
@@ -190,7 +194,8 @@ class CreateWorkflowRequest implements ModelInterface, ArrayAccess, \JsonSeriali
         'name' => 'setName',
         'description' => 'setDescription',
         'definition' => 'setDefinition',
-        'is_active' => 'setIsActive'
+        'is_active' => 'setIsActive',
+        'source_preset_id' => 'setSourcePresetId'
     ];
 
     /**
@@ -202,7 +207,8 @@ class CreateWorkflowRequest implements ModelInterface, ArrayAccess, \JsonSeriali
         'name' => 'getName',
         'description' => 'getDescription',
         'definition' => 'getDefinition',
-        'is_active' => 'getIsActive'
+        'is_active' => 'getIsActive',
+        'source_preset_id' => 'getSourcePresetId'
     ];
 
     /**
@@ -266,6 +272,7 @@ class CreateWorkflowRequest implements ModelInterface, ArrayAccess, \JsonSeriali
         $this->setIfExists('description', $data ?? [], null);
         $this->setIfExists('definition', $data ?? [], null);
         $this->setIfExists('is_active', $data ?? [], null);
+        $this->setIfExists('source_preset_id', $data ?? [], null);
     }
 
     /**
@@ -420,6 +427,33 @@ class CreateWorkflowRequest implements ModelInterface, ArrayAccess, \JsonSeriali
             throw new \InvalidArgumentException('non-nullable is_active cannot be null');
         }
         $this->container['is_active'] = $is_active;
+
+        return $this;
+    }
+
+    /**
+     * Gets source_preset_id
+     *
+     * @return string|null
+     */
+    public function getSourcePresetId()
+    {
+        return $this->container['source_preset_id'];
+    }
+
+    /**
+     * Sets source_preset_id
+     *
+     * @param string|null $source_preset_id Optional id of a system preset from /v1/workflows/presets this workflow is imported from.
+     *
+     * @return self
+     */
+    public function setSourcePresetId($source_preset_id)
+    {
+        if (is_null($source_preset_id)) {
+            throw new \InvalidArgumentException('non-nullable source_preset_id cannot be null');
+        }
+        $this->container['source_preset_id'] = $source_preset_id;
 
         return $this;
     }

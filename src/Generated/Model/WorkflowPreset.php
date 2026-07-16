@@ -1,6 +1,6 @@
 <?php
 /**
- * WorkflowStep
+ * WorkflowPreset
  *
  * PHP version 8.1
  *
@@ -32,7 +32,7 @@ use \ArrayAccess;
 use \iLoveVideoEditorSDK\ObjectSerializer;
 
 /**
- * WorkflowStep Class Doc Comment
+ * WorkflowPreset Class Doc Comment
  *
  * @category Class
  * @package  iLoveVideoEditorSDK
@@ -40,7 +40,7 @@ use \iLoveVideoEditorSDK\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
+class WorkflowPreset implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      *
      * @var string
      */
-    protected static $openAPIModelName = 'WorkflowStep';
+    protected static $openAPIModelName = 'WorkflowPreset';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -57,10 +57,16 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $openAPITypes = [
-        'type' => 'string',
+        'id' => 'string',
         'name' => 'string',
-        'max_retries' => 'int',
-        'config' => 'array<string,mixed>'
+        'description' => 'string',
+        'category' => 'string',
+        'roles' => 'string[]',
+        'goals' => 'string[]',
+        'channels' => 'string[]',
+        'poster_template_id' => 'string',
+        'estimated_credits' => 'int',
+        'definition' => '\iLoveVideoEditorSDK\Model\WorkflowDefinition'
     ];
 
     /**
@@ -71,10 +77,16 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'type' => null,
+        'id' => null,
         'name' => null,
-        'max_retries' => null,
-        'config' => null
+        'description' => null,
+        'category' => null,
+        'roles' => null,
+        'goals' => null,
+        'channels' => null,
+        'poster_template_id' => null,
+        'estimated_credits' => null,
+        'definition' => null
     ];
 
     /**
@@ -83,10 +95,16 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'type' => false,
+        'id' => false,
         'name' => false,
-        'max_retries' => false,
-        'config' => false
+        'description' => false,
+        'category' => false,
+        'roles' => false,
+        'goals' => false,
+        'channels' => false,
+        'poster_template_id' => true,
+        'estimated_credits' => false,
+        'definition' => false
     ];
 
     /**
@@ -175,10 +193,16 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'type' => 'type',
+        'id' => 'id',
         'name' => 'name',
-        'max_retries' => 'maxRetries',
-        'config' => 'config'
+        'description' => 'description',
+        'category' => 'category',
+        'roles' => 'roles',
+        'goals' => 'goals',
+        'channels' => 'channels',
+        'poster_template_id' => 'posterTemplateId',
+        'estimated_credits' => 'estimatedCredits',
+        'definition' => 'definition'
     ];
 
     /**
@@ -187,10 +211,16 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'type' => 'setType',
+        'id' => 'setId',
         'name' => 'setName',
-        'max_retries' => 'setMaxRetries',
-        'config' => 'setConfig'
+        'description' => 'setDescription',
+        'category' => 'setCategory',
+        'roles' => 'setRoles',
+        'goals' => 'setGoals',
+        'channels' => 'setChannels',
+        'poster_template_id' => 'setPosterTemplateId',
+        'estimated_credits' => 'setEstimatedCredits',
+        'definition' => 'setDefinition'
     ];
 
     /**
@@ -199,10 +229,16 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'type' => 'getType',
+        'id' => 'getId',
         'name' => 'getName',
-        'max_retries' => 'getMaxRetries',
-        'config' => 'getConfig'
+        'description' => 'getDescription',
+        'category' => 'getCategory',
+        'roles' => 'getRoles',
+        'goals' => 'getGoals',
+        'channels' => 'getChannels',
+        'poster_template_id' => 'getPosterTemplateId',
+        'estimated_credits' => 'getEstimatedCredits',
+        'definition' => 'getDefinition'
     ];
 
     /**
@@ -246,31 +282,35 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-    public const TYPE_UPLOAD_ASSET = 'upload_asset';
-    public const TYPE_CRAWL_URL = 'crawl_url';
-    public const TYPE_DISCOVER_VARIABLES = 'discover_variables';
-    public const TYPE_RENDER_TEMPLATE = 'render_template';
-    public const TYPE_RENDER_VIDEOJSON = 'render_videojson';
-    public const TYPE_APPLY_TOOL = 'apply_tool';
-    public const TYPE_REVIEW = 'review';
-    public const TYPE_SEND_TO_DESTINATION = 'send_to_destination';
+    public const CATEGORY_GETTING_STARTED = 'getting-started';
+    public const CATEGORY_SOCIAL = 'social';
+    public const CATEGORY_PROMO = 'promo';
+    public const CATEGORY_REAL_ESTATE = 'real_estate';
+    public const CATEGORY_TRAVEL = 'travel';
+    public const CATEGORY_EVENTS = 'events';
+    public const CATEGORY_NEWS = 'news';
+    public const CATEGORY_BEAUTY = 'beauty';
+    public const CATEGORY_AUTOMOTIVE = 'automotive';
+    public const CATEGORY_BUSINESS = 'business';
 
     /**
      * Gets allowable values of the enum
      *
      * @return string[]
      */
-    public function getTypeAllowableValues()
+    public function getCategoryAllowableValues()
     {
         return [
-            self::TYPE_UPLOAD_ASSET,
-            self::TYPE_CRAWL_URL,
-            self::TYPE_DISCOVER_VARIABLES,
-            self::TYPE_RENDER_TEMPLATE,
-            self::TYPE_RENDER_VIDEOJSON,
-            self::TYPE_APPLY_TOOL,
-            self::TYPE_REVIEW,
-            self::TYPE_SEND_TO_DESTINATION,
+            self::CATEGORY_GETTING_STARTED,
+            self::CATEGORY_SOCIAL,
+            self::CATEGORY_PROMO,
+            self::CATEGORY_REAL_ESTATE,
+            self::CATEGORY_TRAVEL,
+            self::CATEGORY_EVENTS,
+            self::CATEGORY_NEWS,
+            self::CATEGORY_BEAUTY,
+            self::CATEGORY_AUTOMOTIVE,
+            self::CATEGORY_BUSINESS,
         ];
     }
 
@@ -289,10 +329,16 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('type', $data ?? [], null);
+        $this->setIfExists('id', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
-        $this->setIfExists('max_retries', $data ?? [], null);
-        $this->setIfExists('config', $data ?? [], null);
+        $this->setIfExists('description', $data ?? [], null);
+        $this->setIfExists('category', $data ?? [], null);
+        $this->setIfExists('roles', $data ?? [], null);
+        $this->setIfExists('goals', $data ?? [], null);
+        $this->setIfExists('channels', $data ?? [], null);
+        $this->setIfExists('poster_template_id', $data ?? [], null);
+        $this->setIfExists('estimated_credits', $data ?? [], null);
+        $this->setIfExists('definition', $data ?? [], null);
     }
 
     /**
@@ -322,28 +368,41 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['type'] === null) {
-            $invalidProperties[] = "'type' can't be null";
+        if ($this->container['id'] === null) {
+            $invalidProperties[] = "'id' can't be null";
         }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
+        if ($this->container['name'] === null) {
+            $invalidProperties[] = "'name' can't be null";
+        }
+        if ($this->container['description'] === null) {
+            $invalidProperties[] = "'description' can't be null";
+        }
+        if ($this->container['category'] === null) {
+            $invalidProperties[] = "'category' can't be null";
+        }
+        $allowedValues = $this->getCategoryAllowableValues();
+        if (!is_null($this->container['category']) && !in_array($this->container['category'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'type', must be one of '%s'",
-                $this->container['type'],
+                "invalid value '%s' for 'category', must be one of '%s'",
+                $this->container['category'],
                 implode("', '", $allowedValues)
             );
         }
 
-        if (!is_null($this->container['max_retries']) && ($this->container['max_retries'] > 10)) {
-            $invalidProperties[] = "invalid value for 'max_retries', must be smaller than or equal to 10.";
+        if ($this->container['roles'] === null) {
+            $invalidProperties[] = "'roles' can't be null";
         }
-
-        if (!is_null($this->container['max_retries']) && ($this->container['max_retries'] < 0)) {
-            $invalidProperties[] = "invalid value for 'max_retries', must be bigger than or equal to 0.";
+        if ($this->container['goals'] === null) {
+            $invalidProperties[] = "'goals' can't be null";
         }
-
-        if ($this->container['config'] === null) {
-            $invalidProperties[] = "'config' can't be null";
+        if ($this->container['channels'] === null) {
+            $invalidProperties[] = "'channels' can't be null";
+        }
+        if ($this->container['estimated_credits'] === null) {
+            $invalidProperties[] = "'estimated_credits' can't be null";
+        }
+        if ($this->container['definition'] === null) {
+            $invalidProperties[] = "'definition' can't be null";
         }
         return $invalidProperties;
     }
@@ -361,38 +420,28 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets type
+     * Gets id
      *
      * @return string
      */
-    public function getType()
+    public function getId()
     {
-        return $this->container['type'];
+        return $this->container['id'];
     }
 
     /**
-     * Sets type
+     * Sets id
      *
-     * @param string $type type
+     * @param string $id id
      *
      * @return self
      */
-    public function setType($type)
+    public function setId($id)
     {
-        if (is_null($type)) {
-            throw new \InvalidArgumentException('non-nullable type cannot be null');
+        if (is_null($id)) {
+            throw new \InvalidArgumentException('non-nullable id cannot be null');
         }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!in_array($type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'type', must be one of '%s'",
-                    $type,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['type'] = $type;
+        $this->container['id'] = $id;
 
         return $this;
     }
@@ -400,7 +449,7 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets name
      *
-     * @return string|null
+     * @return string
      */
     public function getName()
     {
@@ -410,7 +459,7 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets name
      *
-     * @param string|null $name name
+     * @param string $name name
      *
      * @return self
      */
@@ -425,63 +474,234 @@ class WorkflowStep implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets max_retries
+     * Gets description
      *
-     * @return int|null
+     * @return string
      */
-    public function getMaxRetries()
+    public function getDescription()
     {
-        return $this->container['max_retries'];
+        return $this->container['description'];
     }
 
     /**
-     * Sets max_retries
+     * Sets description
      *
-     * @param int|null $max_retries max_retries
+     * @param string $description description
      *
      * @return self
      */
-    public function setMaxRetries($max_retries)
+    public function setDescription($description)
     {
-        if (is_null($max_retries)) {
-            throw new \InvalidArgumentException('non-nullable max_retries cannot be null');
+        if (is_null($description)) {
+            throw new \InvalidArgumentException('non-nullable description cannot be null');
         }
-
-        if (($max_retries > 10)) {
-            throw new \InvalidArgumentException('invalid value for $max_retries when calling WorkflowStep., must be smaller than or equal to 10.');
-        }
-        if (($max_retries < 0)) {
-            throw new \InvalidArgumentException('invalid value for $max_retries when calling WorkflowStep., must be bigger than or equal to 0.');
-        }
-
-        $this->container['max_retries'] = $max_retries;
+        $this->container['description'] = $description;
 
         return $this;
     }
 
     /**
-     * Gets config
+     * Gets category
      *
-     * @return array<string,mixed>
+     * @return string
      */
-    public function getConfig()
+    public function getCategory()
     {
-        return $this->container['config'];
+        return $this->container['category'];
     }
 
     /**
-     * Sets config
+     * Sets category
      *
-     * @param array<string,mixed> $config config
+     * @param string $category category
      *
      * @return self
      */
-    public function setConfig($config)
+    public function setCategory($category)
     {
-        if (is_null($config)) {
-            throw new \InvalidArgumentException('non-nullable config cannot be null');
+        if (is_null($category)) {
+            throw new \InvalidArgumentException('non-nullable category cannot be null');
         }
-        $this->container['config'] = $config;
+        $allowedValues = $this->getCategoryAllowableValues();
+        if (!in_array($category, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'category', must be one of '%s'",
+                    $category,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['category'] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Gets roles
+     *
+     * @return string[]
+     */
+    public function getRoles()
+    {
+        return $this->container['roles'];
+    }
+
+    /**
+     * Sets roles
+     *
+     * @param string[] $roles Onboarding roles this preset is recommended for.
+     *
+     * @return self
+     */
+    public function setRoles($roles)
+    {
+        if (is_null($roles)) {
+            throw new \InvalidArgumentException('non-nullable roles cannot be null');
+        }
+        $this->container['roles'] = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Gets goals
+     *
+     * @return string[]
+     */
+    public function getGoals()
+    {
+        return $this->container['goals'];
+    }
+
+    /**
+     * Sets goals
+     *
+     * @param string[] $goals Onboarding goals this preset is recommended for.
+     *
+     * @return self
+     */
+    public function setGoals($goals)
+    {
+        if (is_null($goals)) {
+            throw new \InvalidArgumentException('non-nullable goals cannot be null');
+        }
+        $this->container['goals'] = $goals;
+
+        return $this;
+    }
+
+    /**
+     * Gets channels
+     *
+     * @return string[]
+     */
+    public function getChannels()
+    {
+        return $this->container['channels'];
+    }
+
+    /**
+     * Sets channels
+     *
+     * @param string[] $channels Onboarding channels this preset is recommended for.
+     *
+     * @return self
+     */
+    public function setChannels($channels)
+    {
+        if (is_null($channels)) {
+            throw new \InvalidArgumentException('non-nullable channels cannot be null');
+        }
+        $this->container['channels'] = $channels;
+
+        return $this;
+    }
+
+    /**
+     * Gets poster_template_id
+     *
+     * @return string|null
+     */
+    public function getPosterTemplateId()
+    {
+        return $this->container['poster_template_id'];
+    }
+
+    /**
+     * Sets poster_template_id
+     *
+     * @param string|null $poster_template_id Toolkit template id whose poster image represents this preset.
+     *
+     * @return self
+     */
+    public function setPosterTemplateId($poster_template_id)
+    {
+        if (is_null($poster_template_id)) {
+            array_push($this->openAPINullablesSetToNull, 'poster_template_id');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('poster_template_id', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['poster_template_id'] = $poster_template_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets estimated_credits
+     *
+     * @return int
+     */
+    public function getEstimatedCredits()
+    {
+        return $this->container['estimated_credits'];
+    }
+
+    /**
+     * Sets estimated_credits
+     *
+     * @param int $estimated_credits Approximate credits consumed per run.
+     *
+     * @return self
+     */
+    public function setEstimatedCredits($estimated_credits)
+    {
+        if (is_null($estimated_credits)) {
+            throw new \InvalidArgumentException('non-nullable estimated_credits cannot be null');
+        }
+        $this->container['estimated_credits'] = $estimated_credits;
+
+        return $this;
+    }
+
+    /**
+     * Gets definition
+     *
+     * @return \iLoveVideoEditorSDK\Model\WorkflowDefinition
+     */
+    public function getDefinition()
+    {
+        return $this->container['definition'];
+    }
+
+    /**
+     * Sets definition
+     *
+     * @param \iLoveVideoEditorSDK\Model\WorkflowDefinition $definition definition
+     *
+     * @return self
+     */
+    public function setDefinition($definition)
+    {
+        if (is_null($definition)) {
+            throw new \InvalidArgumentException('non-nullable definition cannot be null');
+        }
+        $this->container['definition'] = $definition;
 
         return $this;
     }

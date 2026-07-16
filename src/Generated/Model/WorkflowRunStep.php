@@ -630,7 +630,7 @@ class WorkflowRunStep implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets status
      *
-     * @param string|null $status status
+     * @param string|null $status `pending` → `running` → `completed` / `failed` / `skipped`. A `review` step waits in `waiting` for a human decision; the run is in `waiting_review` while any step is waiting.
      *
      * @return self
      */

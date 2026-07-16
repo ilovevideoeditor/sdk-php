@@ -553,7 +553,7 @@ class WorkflowRun implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets status
      *
-     * @param string $status status
+     * @param string $status `queued` → `running` → `completed` / `failed` / `cancelled`. A run with a human-in-the-loop `review` step pauses in `waiting_review` until the step is approved or rejected via `/v1/workflows/runs/{runId}/steps/{stepId}/review`.
      *
      * @return self
      */
